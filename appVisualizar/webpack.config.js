@@ -9,13 +9,13 @@ module.exports = {
     output:{
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: 'http://localhost:9000/'
+        publicPath: 'http://localhost:9003/',
     },
     devServer: {
         static: {
             directory: path.resolve(__dirname, 'public'),
         },
-        port: 9000, 
+        port: 9003, 
         historyApiFallback: true
     },
     resolve: {
@@ -23,11 +23,10 @@ module.exports = {
     },
     plugins: [
         new ModuleFederationPlugin({
-            name: 'container',
-            remotes: {
-                listar: 'listar@http://localhost:9001/remoteEntry.js',
-                cadastrar: 'cadastrar@http://localhost:9002/remoteEntry.js',
-                visualizar: 'visualizar@http://localhost:9003/remoteEntry.js',
+            name: 'visualizar',
+            filename: 'remoteEntry.js',
+            exposes: {
+                './VisualizarClienteApp' : path.resolve(__dirname, 'src', 'components', 'VisualizarClientes'),
             },
             shared: {
                 react: {
